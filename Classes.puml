@@ -1,4 +1,15 @@
-@startuml
+@startuml Classes
+
+
+class Person {
+    int : Money
+    CarClass[] : Cars_Owned
+}
+
+class Dealer {
+    string : Type
+    CarClass[] : Cars
+}
 
 class Car {
     string : Brand
@@ -11,6 +22,11 @@ class Engine {
     int : Torque
 }
 
-Engine -left-|> Car
+
+
+Engine -left-> Car
+Dealer -up-> Car
+
+Car -up-> Person
 
 @enduml

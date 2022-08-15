@@ -3,8 +3,8 @@ class Dealer
 
     private string Type;
 
-    void Dealer(string Type){
-        this._Type = Type;
+    public Dealer(string _Type){
+        this.Type = _Type;
     }
 
     public Car_Class[] Cars = {new Car_Class("F"),};

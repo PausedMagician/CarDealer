@@ -1,7 +1,7 @@
 class Person
 {
-    private Car[] Cars_Owned = [];
+    private Car_Class[] Cars_Owned = {};
     
-    private int Money = 0;
-    
+    public int Money = 0;
+
 }
