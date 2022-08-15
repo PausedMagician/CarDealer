@@ -1,0 +1,16 @@
+@startuml
+
+class Car {
+    string : Brand
+    int : Gear
+    bool : On_State
+}
+
+class Engine {
+    int : Horsepower
+    int : Torque
+}
+
+Engine -left-|> Car
+
+@enduml
