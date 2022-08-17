@@ -1,7 +1,7 @@
 class Engine
 {
-    private int Horsepower;
-    private int Torque;
+    public int Horsepower;
+    public int Torque;
 
     public Engine(int HP, int TQ){
         this.Horsepower = HP;
