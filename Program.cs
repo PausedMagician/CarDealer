@@ -120,6 +120,8 @@ while(true){
                         selected = 100;
                     }
                     break;
+                case ConsoleKey.Enter:
+
                 default:
                     break;
             }
@@ -140,6 +142,17 @@ while(true){
             break;
         case "exit":
             return;
+        case "game":
+            for (int distance = 0;;distance++)
+            {
+                int start = distance%6;
+                for (int i = 48+start; i > start; i--)
+                {
+                    if (i%6>2) Console.WriteLine("      #                  #");
+                    else Console.WriteLine("                          ");
+                }
+                System.Threading.Thread.Sleep(50);
+            }
         default:
             return;
     }

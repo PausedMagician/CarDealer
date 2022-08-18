@@ -57,13 +57,21 @@ class Dealer
             Console.Write(stats[3]);
             Line++;
         }
-        Console.SetCursorPosition(0,47);
-        if (selectedLine == 100) Console.ForegroundColor = ConsoleColor.White;
-        else Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write("Go back");
-        if (selectedLine == 101) Console.ForegroundColor = ConsoleColor.White;
-        else Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write("Confirm");
+        Console.SetCursorPosition(0,46);
+        if (selectedLine == 100) {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Sell car                                     <");
+        } else {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Sell car");
+        }
+        if (selectedLine == 101) {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Go back                                      <");
+        } else {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Go back");
+        }
         Console.SetCursorPosition(0,48);
     }
     public string listengines()
