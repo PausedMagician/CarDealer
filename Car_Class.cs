@@ -16,23 +16,22 @@ class Car_Class {
 
     #region Stats
 
+    private int price;
+    private int appeal;
     private int weight;
     private float aero;
 
-    private int MaxSpeed;
-    private float Acelleration;
-
     #endregion
-    private Engine Car_Engine = new Engine(75, 128);
+    private Engine Car_Engine = new Engine(75, 128, 0);
 
-    public Car_Class(string brnd, string _name,int _weight, float _aero)
+    public Car_Class(string brnd, string _name,int _weight, float _aero, int _appeal, int _price)
     {
         this.Brand = brnd;
         this.Name = _name;
-        this.Car_Engine = new Engine(10, 10);
         this.weight = _weight;
         this.aero = _aero;
-        
+        this.appeal = _appeal;
+        this.price = _price;   
     }
     public void change_engine(Engine new_engine, Person _Person){
         _Person.Engines_Owned.Append(Car_Engine);
@@ -45,7 +44,19 @@ class Car_Class {
     }
     public string[] getstats()
     {
-        String[] output = {Brand,Name,weight.ToString(),aero.ToString()};
+        String[] output = {Brand,Name,weight.ToString(),aero.ToString(),price.ToString()};
         return output;
+    }
+    public int getappeal ()
+    {
+        return appeal;
+    }
+    public int getacceleration ()
+    {
+        return ((Car_Engine.Torque*100)/weight);
+    }
+    public int getspeed ()
+    {
+        return (int)(Car_Engine.Horsepower*aero);
     }
 }

@@ -67,94 +67,201 @@ void Map(Person _person)
     location(40, 30, "Carshow", "Triangle");
     location(140, 35, "Work", "Triangle");
     location(90, 25, "Streetrace", "Rectangle");
+    location(75, 9, "Mechanic", "Square");
 
     Console.SetCursorPosition(0, 47);
 }
 
-
+void info(Person _person, int day)
+{
+    Console.ForegroundColor = ConsoleColor.Blue;
+    Console.SetCursorPosition(0,0);
+    Console.WriteLine();
+    Console.WriteLine("####################################################################################################################################################################################");
+    Console.SetCursorPosition(0,0);
+    Console.Write(" Day: ");
+    Console.Write(day.ToString());
+    Console.SetCursorPosition(150,0);
+    Console.Write("Money: ");
+    Console.Write(_person.Money.ToString());
+}
 
 
 #region Classes In The Making
-Dealer car_Dealer = new Dealer("Cars"); //This class you need to create yourself!
+Dealer car_Dealer = new Dealer();
 
 // Engines
 
 Person player = new Person();
 #endregion
 
+int day = 0;
+
 while(true){
+    info(player, day);
     Map(player);
 
     Console.ForegroundColor = ConsoleColor.Blue;
-    Console.Write("Write an action [buy, sell, exit]\n");
+    // Console.Write("Write an action [buy, sell, exit]\n");
+    Console.Write("Choose where to go\n");
 
-    string input = Console.ReadLine();
+    string input = Console.ReadLine() ?? throw new NullReferenceException();
+    if (input == "") continue;
     input = input.ToLower();
     switch (input)
     {
-        case "buy":
-            //Car myNewCar = dealer.buy(...);
+        case "Mechanic":
             break;
-        case "shop":
-            int selected = 3;
-            while (true)
+        case "engine":
+        case "store":
+        case "engine store":
+            break;
+        case "car":
+        case "dealer":
+        case "cardealer":
+        case "dealership":
+            int selected = 1;
+            bool shooping = true;
+            while (shooping)
             {
-            car_Dealer.listcars(selected);
-            ConsoleKey inputKey = Console.ReadKey().Key;
-            switch(inputKey){
-                case ConsoleKey.DownArrow:
-                    if(selected < car_Dealer.Cars.Length+2){
-                        selected +=1;
-                    }else if(selected == car_Dealer.Cars.Length+2){
-                        selected = 100;
-                    }else if (selected == 100){
-                        selected = 101;
-                    }
-                    break;
-                case ConsoleKey.UpArrow:
-                    if(selected > 3 && selected < 100){
-                        selected -=1;
-                    }else if(selected == 100){
-                        selected = car_Dealer.Cars.Length+2;
-                    }else if (selected == 101){
-                        selected = 100;
-                    }
-                    break;
-                case ConsoleKey.Enter:
-
-                default:
-                    break;
-            }
-            }
-            break;
-        case "coord":
-            string coord = Console.ReadLine();
-            string[] spliited = coord.Split(" ");
-            Console.WriteLine(spliited[0]);
-            Console.WriteLine(spliited[1]);
-            player.Coordinates[0] = int.Parse(spliited[0]);
-            player.Coordinates[1] = int.Parse(spliited[1]);
-            Console.Write(player.Coordinates[0]);
-            Console.Write(player.Coordinates[1]);
-            Console.ReadKey();
-            break;
-        case "sell":
-            break;
-        case "exit":
-            return;
-        case "game":
-            for (int distance = 0;;distance++)
-            {
-                int start = distance%6;
-                for (int i = 48+start; i > start; i--)
+                Console.Clear();
+                info(player,day);
+                car_Dealer.menu(selected);
+                ConsoleKey inputKey = Console.ReadKey().Key;
+                switch (inputKey)
                 {
-                    if (i%6>2) Console.WriteLine("      #                  #");
-                    else Console.WriteLine("                          ");
-                }
-                System.Threading.Thread.Sleep(50);
+                    case ConsoleKey.DownArrow:
+                        if (selected < 3)
+                        {
+                            selected++;
+                        }
+                        break;
+                    case ConsoleKey.UpArrow:
+                        if (selected > 1)
+                        {
+                            selected--;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        if (selected == 1)
+                        {
+                            selected = 0;
+                            bool buying = true;
+                            while (buying)
+                            {
+                                Console.Clear();
+                                info(player,day);
+                                car_Dealer.listcars(selected);
+                                inputKey = Console.ReadKey().Key;
+                                switch(inputKey){
+                                    case ConsoleKey.DownArrow:
+                                        if(selected < car_Dealer.Cars.Length-1){
+                                            selected++;
+                                        }else if(selected == car_Dealer.Cars.Length-1){
+                                            selected = 100;
+                                        }
+                                        break;
+                                    case ConsoleKey.UpArrow:
+                                        if(selected > 0 && selected < 100){
+                                            selected--;
+                                        }else if(selected == 100){
+                                            selected = car_Dealer.Cars.Length-1;
+                                        }
+                                        break;
+                                    case ConsoleKey.Enter:
+                                        // BUY CAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                        buying = false;
+                                        selected = 3;
+                                        break;
+                                    default:
+                                        break;
+                                }   
+                            }
+                        } else if (selected == 2)
+                        {
+                            selected = 0;
+                            bool selling = true;
+                            while (selling)
+                            {
+                                Console.Clear();
+                                info(player,day);
+                                player.listcars(selected);
+                                inputKey = Console.ReadKey().Key;
+                                switch(inputKey){
+                                    case ConsoleKey.DownArrow:
+                                        if(selected < player.Cars.Length-1){
+                                            selected++;
+                                        }else if(selected == player.Cars.Length-1){
+                                            selected = 100;
+                                        }
+                                        break;
+                                    case ConsoleKey.UpArrow:
+                                        if(selected > 0 && selected < 100){
+                                            selected--;
+                                        }else if(selected == 100){
+                                            selected = player.Cars.Length-1;
+                                        }
+                                        break;
+                                    case ConsoleKey.Enter:
+                                        // SELL CAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                        selling = false;
+                                        selected = 3;
+                                        break;
+                                    default:
+                                        break;
+                                }   
+                            }
+                        } else if (selected == 3)
+                        {
+                            shooping = false;
+                            break ;
+                        }
+                        break;
+                    default:
+                        break;
+                }            
             }
+            break;
+        // case "coord":
+        //     string coord = Console.ReadLine();
+        //     string[] spliited = coord.Split(" ");
+        //     Console.WriteLine(spliited[0]);
+        //     Console.WriteLine(spliited[1]);
+        //     player.Coordinates[0] = int.Parse(spliited[0]);
+        //     player.Coordinates[1] = int.Parse(spliited[1]);
+        //     Console.Write(player.Coordinates[0]);
+        //     Console.Write(player.Coordinates[1]);
+        //     Console.ReadKey();
+        //     break;
+        case "work":
+            player.Money += 100;
+            break;
+        case "streetrace":
+        case "race":
+            // for (int distance = 0;;distance++)
+            // {
+            //     int start = distance%6;
+            //     for (int i = 48+start; i > start; i--)
+            //     {
+            //         if (i%6>2) Console.WriteLine("      #                  #");
+            //         else Console.WriteLine("                          ");
+            //     }
+            //     System.Threading.Thread.Sleep(50);
+            // }
+            player.Money += player.Cars[0].getspeed();
+            break;
+        case "carshow":
+        case "show":
+            player.Money += player.Cars[0].getappeal()*10; // +brand
+            break;
+        case "drag":
+        case "dragstrip":
+            player.Money += player.Cars[0].getacceleration();
+            break;
         default:
-            return;
+            day--;
+            break;
     }
     Console.Clear();
+    day++;
 }
