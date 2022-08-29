@@ -1,32 +1,35 @@
 @startuml Classes
 
 
-class Person {
-    int : Money
-    CarClass[] : Cars_Owned
-}
-
-class Dealer {
-    string : Type
-    CarClass[] : Cars
-}
-
 class Car {
-    string : Brand
-    int : Gear
-    bool : On_State
+    - Brand: string
+    - Name: string
+    - Color: color
+    - Price: int
+    - Appeal: int
+    - Weight: int
+    - Aero: float
+    + Engine
 }
 
 class Engine {
-    int : Horsepower
-    int : Torque
+    - HP: int
+    - TQ: int
 }
 
+class Dealer{
 
+}
 
-Engine -left-> Car
-Dealer -up-> Car
+class Person {
+    cars
+    engines
+    listcasrs
+    listengin
+}
 
-Car -up-> Person
+Engine  -up-> Car
+Dealer -left- Car
+Person <|-- Dealer
 
 @enduml

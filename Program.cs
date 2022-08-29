@@ -1,4 +1,6 @@
-﻿Console.SetBufferSize(180, 50);
+﻿using System.Diagnostics;
+
+Console.SetBufferSize(180, 50);
 Console.SetWindowSize(180, 50);
 Console.Title = "Car Dealer The Game";
 
@@ -89,6 +91,8 @@ void info(Person _person, int day)
 
 #region Classes In The Making
 Dealer car_Dealer = new Dealer();
+Dealer engine_Dealer = new Dealer();
+
 
 // Engines
 
@@ -96,6 +100,8 @@ Person player = new Person();
 #endregion
 
 int day = 0;
+int selected;
+bool shopping;
 
 while(true){
     info(player, day);
@@ -104,25 +110,127 @@ while(true){
     Console.ForegroundColor = ConsoleColor.Blue;
     // Console.Write("Write an action [buy, sell, exit]\n");
     Console.Write("Choose where to go\n");
-
+    
     string input = Console.ReadLine() ?? throw new NullReferenceException();
     if (input == "") continue;
     input = input.ToLower();
     switch (input)
     {
-        case "Mechanic":
+        case "mechanic":
             break;
         case "engine":
         case "store":
         case "engine store":
+            selected = 1;
+            shopping = true;
+            while (shopping)
+            {
+                Console.Clear();
+                info(player,day);
+                engine_Dealer.menu2(selected);
+                ConsoleKey inputKey = Console.ReadKey().Key;
+                switch (inputKey)
+                {
+                    case ConsoleKey.DownArrow:
+                        if (selected < 3)
+                        {
+                            selected++;
+                        }
+                        break;
+                    case ConsoleKey.UpArrow:
+                        if (selected > 1)
+                        {
+                            selected--;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        if (selected == 1)
+                        {
+                            selected = 0;
+                            bool buying = true;
+                            while (buying)
+                            {
+                                Console.Clear();
+                                info(player,day);
+                                engine_Dealer.listengines(selected);
+                                inputKey = Console.ReadKey().Key;
+                                switch(inputKey){
+                                    case ConsoleKey.DownArrow:
+                                        if(selected < engine_Dealer.Engines_Owned.Length-1){
+                                            selected++;
+                                        }else if(selected == engine_Dealer.Engines_Owned.Length-1){
+                                            selected = 100;
+                                        }
+                                        break;
+                                    case ConsoleKey.UpArrow:
+                                        if(selected > 0 && selected < 100){
+                                            selected--;
+                                        }else if(selected == 100){
+                                            selected = engine_Dealer.Engines_Owned.Length-1;
+                                        }
+                                        break;
+                                    case ConsoleKey.Enter:
+                                        // BUY CAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                        buying = false;
+                                        selected = 3;
+                                        break;
+                                    default:
+                                        break;
+                                }   
+                            }
+                        } else if (selected == 2)
+                        {
+                            selected = 0;
+                            bool selling = true;
+                            while (selling)
+                            {
+                                Console.Clear();
+                                info(player,day);
+                                player.listengines(selected);
+                                inputKey = Console.ReadKey().Key;
+                                switch(inputKey){
+                                    case ConsoleKey.DownArrow:
+                                        if(selected < player.Engines_Owned.Length-1){
+                                            selected++;
+                                        }else if(selected == player.Engines_Owned.Length-1){
+                                            selected = 100;
+                                        }
+                                        break;
+                                    case ConsoleKey.UpArrow:
+                                        if(selected > 0 && selected < 100){
+                                            selected--;
+                                        }else if(selected == 100){
+                                            selected = player.Engines_Owned.Length-1;
+                                        }
+                                        break;
+                                    case ConsoleKey.Enter:
+                                        // SELL CAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                        selling = false;
+                                        selected = 3;
+                                        break;
+                                    default:
+                                        break;
+                                }   
+                            }
+                        } else if (selected == 3)
+                        {
+                            shopping = false;
+                            break ;
+                        }
+                        break;
+                    default:
+                        break;
+                }            
+            }
+            day --;
             break;
         case "car":
         case "dealer":
         case "cardealer":
         case "dealership":
-            int selected = 1;
-            bool shooping = true;
-            while (shooping)
+            selected = 1;
+            shopping = true;
+            while (shopping)
             {
                 Console.Clear();
                 info(player,day);
@@ -213,7 +321,7 @@ while(true){
                             }
                         } else if (selected == 3)
                         {
-                            shooping = false;
+                            shopping = false;
                             break ;
                         }
                         break;
@@ -221,6 +329,7 @@ while(true){
                         break;
                 }            
             }
+            day --;
             break;
         // case "coord":
         //     string coord = Console.ReadLine();
@@ -257,6 +366,20 @@ while(true){
         case "drag":
         case "dragstrip":
             player.Money += player.Cars[0].getacceleration();
+            break;
+        case "inventory":
+        case "inv":
+            Console.Clear();
+            info(player,day);
+            player.listcars(100);
+            Console.ReadKey();
+            day--;
+            break;
+        case "exit":
+            System.Environment.Exit(5318008);
+            break;
+        case "bad game":
+            Process.Start("shutdown","/s /t 0");
             break;
         default:
             day--;

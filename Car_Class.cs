@@ -1,8 +1,6 @@
 class Car_Class {
 
     #region States
-    private int Gear = 0;
-    private bool Ignition = false;
     private string Brand;
     private string Name;
     
@@ -22,7 +20,7 @@ class Car_Class {
     private float aero;
 
     #endregion
-    private Engine Car_Engine = new Engine(75, 128, 0);
+    private Engine Car_Engine = new Engine(75, 128, 6000, 0);
 
     public Car_Class(string brnd, string _name,int _weight, float _aero, int _appeal, int _price)
     {
@@ -57,6 +55,6 @@ class Car_Class {
     }
     public int getspeed ()
     {
-        return (int)(Car_Engine.Horsepower*aero);
+        return (int)(Car_Engine.Horsepower+((-69)/(0.8+Math.Pow(((Car_Engine.Torque*aero)/(24)), 2)))+((Car_Engine.Horsepower-(Car_Engine.Torque+((Car_Engine.Horsepower)/(3))))/(0.8+Math.Pow(((Car_Engine.Torque*aero)/(24)), 2)))+Car_Engine.Torque);
     }
 }
