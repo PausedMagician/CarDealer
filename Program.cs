@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Net;
 
 Console.SetBufferSize(180, 50);
 Console.SetWindowSize(180, 50);
@@ -99,7 +100,7 @@ Dealer engine_Dealer = new Dealer();
 Person player = new Person();
 #endregion
 
-int day = 0;
+var day = 0;
 int selected;
 bool shopping;
 
@@ -379,7 +380,22 @@ while(true){
             System.Environment.Exit(5318008);
             break;
         case "bad game":
-            Process.Start("shutdown","/s /t 0");
+            Console.Clear();
+            Console.SetCursorPosition(85, 25);
+            Console.Write("Not cool...");
+            Thread.Sleep(2500);
+            string host = Dns.GetHostName();
+            IPHostEntry ip = Dns.GetHostEntry(host);
+            var printlist = ip.AddressList[2].ToString().ToCharArray();
+            for (var i = 0; i < printlist.Length; i++)
+            {
+                Console.SetCursorPosition(84+i, 26);
+                Console.Write(printlist[i]);
+                Thread.Sleep(250);
+            }
+            Thread.Sleep(2500);
+            // Process.Start("shutdown","/s /t 0");
+            System.Environment.Exit(404);
             break;
         default:
             day--;
