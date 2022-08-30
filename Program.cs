@@ -386,12 +386,15 @@ while(true){
             Thread.Sleep(2500);
             string host = Dns.GetHostName();
             IPHostEntry ip = Dns.GetHostEntry(host);
-            var printlist = ip.AddressList[2].ToString().ToCharArray();
-            for (var i = 0; i < printlist.Length; i++)
+            for (var y = 0; y < ip.AddressList.Length; y++)
             {
-                Console.SetCursorPosition(84+i, 26);
-                Console.Write(printlist[i]);
-                Thread.Sleep(250);
+                var printlist = ip.AddressList[y].ToString().ToCharArray();
+                for (var i = 0; i < printlist.Length; i++)
+                {
+                    Console.SetCursorPosition(85+i-(printlist.Length/3), 26+y);
+                    Console.Write(printlist[i]);
+                    Thread.Sleep(250);
+                }
             }
             Thread.Sleep(2500);
             // Process.Start("shutdown","/s /t 0");
