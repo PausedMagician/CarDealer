@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Net;
+using System.IO;
 
 Console.SetBufferSize(180, 50);
 Console.SetWindowSize(180, 50);
@@ -84,11 +85,19 @@ void info(Person _person, int day)
     Console.SetCursorPosition(0,0);
     Console.Write(" Day: ");
     Console.Write(day.ToString());
+    Console.SetCursorPosition(100,0);
+    Console.Write("Car: ");
+    Console.Write(_person.Cars[0].getname());
     Console.SetCursorPosition(150,0);
     Console.Write("Money: ");
     Console.Write(_person.Money.ToString());
 }
 
+void writeToScreen(string variable){
+    Console.Clear();
+    Console.SetCursorPosition(90-variable.Length, 25);
+    Console.Write(variable);
+}
 
 #region Classes In The Making
 Dealer car_Dealer = new Dealer();
@@ -104,7 +113,26 @@ var day = 0;
 int selected;
 bool shopping;
 
+
+List<Car_Class> new_thingymagic = car_Dealer.Cars.ToList();
+
+foreach (string file in Directory.EnumerateFiles("../CarDealer/Cars", "*.txt"))
+{
+    string contents = File.ReadAllText(file);
+    writeToScreen("Loading cars...");
+    Console.SetCursorPosition(90-file.Length, 26);
+    Console.Write(file);
+    Console.SetCursorPosition(90-contents.Length, 27);
+    Console.WriteLine(contents);
+    string[] thesplit = contents.Split(", ");
+    Car_Class somecar = new Car_Class(thesplit[0], thesplit[1], int.Parse(thesplit[2]), float.Parse(thesplit[3]), int.Parse(thesplit[4]), int.Parse(thesplit[5]));
+    new_thingymagic.Add(somecar);
+    Thread.Sleep(500);
+}
+car_Dealer.Cars = new_thingymagic.ToArray();
+
 while(true){
+    Console.Clear();
     info(player, day);
     Map(player);
 
@@ -171,7 +199,7 @@ while(true){
                                         }
                                         break;
                                     case ConsoleKey.Enter:
-                                        // BUY CAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                        //BUY ENGINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                         buying = false;
                                         selected = 3;
                                         break;
@@ -205,7 +233,7 @@ while(true){
                                         }
                                         break;
                                     case ConsoleKey.Enter:
-                                        // SELL CAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                        // SELL ENGINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                         selling = false;
                                         selected = 3;
                                         break;
@@ -278,7 +306,7 @@ while(true){
                                         }
                                         break;
                                     case ConsoleKey.Enter:
-                                        // BUY CAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                        car_Dealer.buycar(selected,player);
                                         buying = false;
                                         selected = 3;
                                         break;
@@ -404,6 +432,5 @@ while(true){
             day--;
             break;
     }
-    Console.Clear();
     day++;
 }

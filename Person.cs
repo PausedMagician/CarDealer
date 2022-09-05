@@ -18,13 +18,13 @@ class Person
         Console.WriteLine("Cars("+Cars.Length+"):");
         Console.SetCursorPosition(0,5);
         Console.Write("Brand:");
-        Console.SetCursorPosition(10,5);
+        Console.SetCursorPosition(15,5);
         Console.Write("Name:");
-        Console.SetCursorPosition(30,5);
+        Console.SetCursorPosition(40,5);
         Console.Write("Weigth:");
-        Console.SetCursorPosition(38,5);
+        Console.SetCursorPosition(48,5);
         Console.Write("Aero:");
-        Console.SetCursorPosition(44,5);
+        Console.SetCursorPosition(55,5);
         Console.Write("Price:");
         int Line = 6;
         foreach (Car_Class car in Cars)
@@ -39,13 +39,13 @@ class Person
             else Console.ForegroundColor = ConsoleColor.Blue;
             Console.SetCursorPosition(0,Line);
             Console.Write(stats[0]);
-            Console.SetCursorPosition(10,Line);
+            Console.SetCursorPosition(15,Line);
             Console.Write(stats[1]);
-            Console.SetCursorPosition(30,Line);
+            Console.SetCursorPosition(40,Line);
             Console.Write(stats[2]);
-            Console.SetCursorPosition(38,Line);
+            Console.SetCursorPosition(48,Line);
             Console.Write(stats[3]);
-            Console.SetCursorPosition(44,Line);
+            Console.SetCursorPosition(55,Line);
             Console.Write(stats[4]);
             Line++;
         }

@@ -6,12 +6,6 @@ class Car_Class {
     
     #endregion
 
-    #region Cosmetics
-
-    private ConsoleColor Color;
-
-    #endregion
-
     #region Stats
 
     private int price;
@@ -29,7 +23,11 @@ class Car_Class {
         this.weight = _weight;
         this.aero = _aero;
         this.appeal = _appeal;
-        this.price = _price;   
+        this.price = _price;
+    }
+    public string getname()
+    {
+        return this.Brand+" "+this.Name;
     }
     public void change_engine(Engine new_engine, Person _Person){
         _Person.Engines_Owned.Append(Car_Engine);
@@ -40,6 +38,9 @@ class Car_Class {
         // this.MaxSpeed = 
         
     }
+    /// <summary>
+    /// Returns the stats in the order, Brand, Name, Weight, Aero, Price.
+    /// </summary>
     public string[] getstats()
     {
         String[] output = {Brand,Name,weight.ToString(),aero.ToString(),price.ToString()};
