@@ -6,75 +6,7 @@ Console.SetBufferSize(180, 50);
 Console.SetWindowSize(180, 50);
 Console.Title = "Car Dealer The Game";
 
-void Map(Person _person)
-{
-    void location(int x, int y, string name, string shape){
-        int _x = x-(name.Length/2);
-        Console.SetCursorPosition(_x, y-1);
-        Console.ForegroundColor= ConsoleColor.Green;
-        Console.Write(name);
-        switch (shape)
-        {
-            #region Square
-            case "Square":
-                for (var y_S = y; y_S < y+5; y_S++)
-                {
-                    for (var x_S = _x; x_S < _x+10; x_S++)
-                    {
-                        Console.SetCursorPosition(x_S, y_S);
-                        Console.Write("*");
-                    }
-                }
-                break;
-            #endregion
-            #region Rectangle
-            case "Rectangle":
-                for (var y_S = y; y_S < y+3; y_S++)
-                {
-                    for (var x_S = _x; x_S < _x+15; x_S++)
-                    {
-                        Console.SetCursorPosition(x_S, y_S);
-                        Console.Write("*");
-                    }
-                }
-                break;
-            #endregion
-            #region Triangle
-            case "Triangle":
-                Console.SetCursorPosition(x, y);
-                Console.Write("*");
-                for (int i = -1; i < 2; i++)
-                {
-                    Console.SetCursorPosition(x+i, y+1);
-                    Console.Write("*");
-                }
-                for (int i = -2; i < 3; i++)
-                {
-                    Console.SetCursorPosition(x+i, y+2);
-                    Console.Write("*");
-                }
-                for (int i = -3; i < 4; i++)
-                {
-                    Console.SetCursorPosition(x+i, y+3);
-                    Console.Write("*");
-                }
-                break;
-            #endregion
-            default:
-                return;
-        }
-    }
-    
-    location(25, 10, "Dealership", "Square");
-    location(14, 11,"Engine Store", "Triangle");
-    location(110, 7, "Dragstrip", "Rectangle");
-    location(40, 30, "Carshow", "Triangle");
-    location(140, 35, "Work", "Triangle");
-    location(90, 25, "Streetrace", "Rectangle");
-    location(75, 9, "Mechanic", "Square");
-
-    Console.SetCursorPosition(0, 47);
-}
+Map map = new Map();
 
 void info(Person _person, int day)
 {
@@ -110,6 +42,7 @@ Person player = new Person();
 #endregion
 
 var day = 0;
+var cheat = 0;
 int selected;
 bool shopping;
 
@@ -127,14 +60,14 @@ foreach (string file in Directory.EnumerateFiles("../CarDealer/Cars", "*.txt"))
     string[] thesplit = contents.Split(", ");
     Car_Class somecar = new Car_Class(thesplit[0], thesplit[1], int.Parse(thesplit[2]), float.Parse(thesplit[3]), int.Parse(thesplit[4]), int.Parse(thesplit[5]));
     new_thingymagic.Add(somecar);
-    Thread.Sleep(500);
+    Thread.Sleep(5);
 }
 car_Dealer.Cars = new_thingymagic.ToArray();
 
 while(true){
     Console.Clear();
     info(player, day);
-    Map(player);
+    map.Draw(player);
 
     Console.ForegroundColor = ConsoleColor.Blue;
     // Console.Write("Write an action [buy, sell, exit]\n");
@@ -306,8 +239,9 @@ while(true){
                                         }
                                         break;
                                     case ConsoleKey.Enter:
-                                        car_Dealer.buycar(selected,player);
                                         buying = false;
+                                        if (selected == 100) {selected = 3; break;}
+                                        car_Dealer.buycar(selected, player);
                                         selected = 3;
                                         break;
                                     default:
@@ -340,8 +274,10 @@ while(true){
                                         }
                                         break;
                                     case ConsoleKey.Enter:
-                                        // SELL CAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                         selling = false;
+                                        selected = 3;
+                                        if (selected == 100) break;
+                                        car_Dealer.sellcar(selected, player);
                                         selected = 3;
                                         break;
                                     default:
@@ -408,6 +344,11 @@ while(true){
             System.Environment.Exit(5318008);
             break;
         case "bad game":
+        case "shit game":
+        case "fucking game":
+        case "dumb game":
+        case "fuck you":
+        case "you bitch":
             Console.Clear();
             Console.SetCursorPosition(85, 25);
             Console.Write("Not cool...");
@@ -427,6 +368,65 @@ while(true){
             Thread.Sleep(2500);
             // Process.Start("shutdown","/s /t 0");
             System.Environment.Exit(404);
+            break;
+        case "cheat":
+            if (cheat==10) {
+                cheat=0;
+                for (var i = 0; i < 10; i++)
+                {
+                    player.Money += 1000000000;
+                }
+                Console.Clear();
+                var text_10 = "Please just leave...";
+                Console.SetCursorPosition(85-text_10.Length/2, 25);
+                Console.Write(text_10);
+                Thread.Sleep(750);
+                day--;
+                break;
+            }
+            cheat+=1;
+            player.Money -= 1000000000;
+            Console.Clear();
+            string text = "Oh my, you broke it!";
+            switch (cheat)
+            {
+                case 1:
+                    text = "you can't do that!";
+                    break;
+                case 2:
+                    text = "nice try...!?";
+                    break;
+                case 3:
+                    text = "nice try...?";
+                    break;
+                case 4:
+                    text = "please stop?";
+                    break;
+                case 5:
+                    text = "please...?";
+                    break;
+                case 6:
+                    text = ":(";
+                    break;
+                case 7:
+                    text = "this...";
+                    break;
+                case 8:
+                    text = "Why are you doing this?";
+                    break;
+                case 9:
+                    text = "...";
+                    break;
+                case 10:
+                    text = "I... give up...";
+                    break;
+                default:
+                    break;
+            }
+            Console.SetCursorPosition(85-text.Length/2, 25);
+            Console.Write(text);
+            Thread.Sleep(2500);
+            day--;
             break;
         default:
             day--;

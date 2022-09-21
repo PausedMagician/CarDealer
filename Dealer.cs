@@ -33,8 +33,21 @@ class Dealer : Person
         }
         return false;
     }
-    public bool sellcar() 
+    public bool sellcar(int index, Person player) 
     {
+        Car_Class car_in_question = player.Cars[index-3];
+        int price = int.Parse(car_in_question.getstats()[4]);
+        if (player.Cars.Length > 1)
+        {
+            player.Money += price;
+            List<Car_Class> temp_list = this.Cars.ToList();
+            List<Car_Class> temp_list2 = player.Cars.ToList();
+            temp_list.Add(car_in_question);
+            temp_list2.RemoveAt(index-3);
+            this.Cars = temp_list.ToArray();
+            player.Cars = temp_list2.ToArray();
+            return true;
+        }
         return false;
     }
     public void menu(int selectedLine)

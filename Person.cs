@@ -33,7 +33,7 @@ class Person
             if (selectedLine+6 == Line) 
             {
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(56,Line);
+                Console.SetCursorPosition(70,Line);
                 Console.Write("<");
             }
             else Console.ForegroundColor = ConsoleColor.Blue;
@@ -51,7 +51,7 @@ class Person
         }
         if (selectedLine == 100) {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(56,47);
+            Console.SetCursorPosition(70,47);
             Console.Write("<");
         } else {
             Console.ForegroundColor = ConsoleColor.Blue;
